@@ -5,4 +5,5 @@ export default configureStore({
   reducer: {
     user: userReducer,
   },
+  devTools: true  // 确保开启了 devTools
 })
