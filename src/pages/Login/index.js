@@ -1,17 +1,20 @@
 import './index.scss'
-import { Card, Form, Input, Button } from 'antd'
+import { Card, Form, Input, Button, message } from 'antd'
 import logo from '@/assets/logo.png'
 import { useDispatch } from 'react-redux'
 import { fetchLogin } from '@/store/modules/user'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const dispatch = useDispatch()
   // const token = useSelector(state => state.user.token)  // 获取 store 中的 token
-
-  const onFinish = (values) => {
+  const navigate = useNavigate()
+  const onFinish = async (values) => {
     // console.log('values', values)
-    dispatch(fetchLogin(values))
+    await dispatch(fetchLogin(values))
+    navigate('/')
+    message.success('登录成功')
   }
   return (
     <div className="login">
