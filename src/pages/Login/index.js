@@ -1,10 +1,17 @@
 import './index.scss'
 import { Card, Form, Input, Button } from 'antd'
 import logo from '@/assets/logo.png'
+import { useDispatch } from 'react-redux'
+import { fetchLogin } from '@/store/modules/user'
+import { useSelector } from 'react-redux'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  // const token = useSelector(state => state.user.token)  // 获取 store 中的 token
+
   const onFinish = (values) => {
-    console.log('values', values)
+    // console.log('values', values)
+    dispatch(fetchLogin(values))
   }
   return (
     <div className="login">
@@ -22,7 +29,7 @@ const Login = () => {
             <Input size="large" placeholder="请输入手机号" />
           </Form.Item>
           <Form.Item
-            name="验证码"
+            name="code"
             rules={[{ required: true, message: '请输入验证码' }]}
           >
             <Input size="large" placeholder="请输入验证码" />
@@ -34,6 +41,7 @@ const Login = () => {
           </Form.Item>
         </Form>
       </Card>
+      {/* <div>token{token}</div> */}
     </div>
   )
 }
