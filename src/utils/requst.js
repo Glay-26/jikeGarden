@@ -1,5 +1,7 @@
 // axios的封装处理
 import axios from 'axios'
+import { getTTFB } from 'web-vitals'
+import { getToken } from './token'
 // 1.根域名配置；2.请求拦截器；3.响应拦截器；4.请求封装；5.导出
 
 const requst = axios.create({
@@ -9,6 +11,10 @@ const requst = axios.create({
 
 // 添加请求拦截器：在请求发送之前，做拦截，插入一些自定义配置【参数处理】
 requst.interceptors.request.use((config)=> {
+  const token = getToken()
+  if(token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
     return config
   }, (error)=> {
     return Promise.reject(error)
