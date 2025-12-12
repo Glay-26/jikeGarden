@@ -1,5 +1,8 @@
 import { requst } from "./requst";
-
+import { getToken, setToken, removeToken } from "./token";
 export {
-  requst
+  requst,
+  getToken,
+  setToken,
+  removeToken
 }
