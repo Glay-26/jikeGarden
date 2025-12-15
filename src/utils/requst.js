@@ -1,7 +1,8 @@
 // axios的封装处理
 import axios from 'axios'
 import { getTTFB } from 'web-vitals'
-import { getToken } from './token'
+import { getToken, removeToken } from './token'
+import router from '@/router'
 // 1.根域名配置；2.请求拦截器；3.响应拦截器；4.请求封装；5.导出
 
 const requst = axios.create({
@@ -28,6 +29,12 @@ requst.interceptors.response.use((response)=> {
   }, (error)=> {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+    if (error.response.status === 401) {
+      // 跳转到登录页面
+      removeToken()
+      router.navigate('/login')
+      window.location.reload()
+    }
     return Promise.reject(error)
 })
 export {requst}
