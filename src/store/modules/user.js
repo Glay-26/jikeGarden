@@ -4,7 +4,8 @@ import { setToken as setTokenAction, getToken } from '@/utils'
 const userStore = createSlice({
     name: "user",
     initialState: {
-        token:getToken() || ''
+        token:getToken() || '',
+        userInfo: {}
     },
     reducers: {
         setToken(state, action) {
@@ -12,9 +13,12 @@ const userStore = createSlice({
             setTokenAction(action.payload)
             // localStorage.setItem('token', action.payload)
         },
+        setUserInfo(state, action) {
+            state.userInfo = action.payload
+        }
     }
 })
-const { setToken } = userStore.actions
+const { setToken, setUserInfo } = userStore.actions
 const userReducer = userStore.reducer
 
 const fetchLogin = (loginForm) =>{
@@ -24,7 +28,11 @@ const fetchLogin = (loginForm) =>{
         dispatch(setToken(res.data.token))
     }
 }
-
-
+const fetchUserInfo = () => {
+    return async (dispatch) => {
+        const res = await requst.get('/user/profile')
+        dispatch(setUserInfo(res.data))
+    }
+}
 export default userReducer
-export {fetchLogin,setToken}
+export {fetchLogin,fetchUserInfo,setToken}
