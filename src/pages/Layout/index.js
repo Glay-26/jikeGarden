@@ -8,6 +8,7 @@ import {
 import './index.scss'
 import { Outlet } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 const { Header, Sider } = Layout
 
@@ -34,6 +35,9 @@ const GeekLayout = () => {
   const onMenuClick = (e) => {
     navigate(e.key)
   }
+  const location = useLocation()
+  console.log(location)
+  const selectKey = location.pathname
   return (
     <Layout>
       <Header className="header">
@@ -53,7 +57,7 @@ const GeekLayout = () => {
             mode="inline"
             theme="dark"
             onClick={onMenuClick}
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[selectKey]}
             items={items}
             style={{ height: '100%', borderRight: 0 }}></Menu>
         </Sider>
